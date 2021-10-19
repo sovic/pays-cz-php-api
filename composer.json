@@ -10,6 +10,14 @@
     ],
     "type": "library",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pays\\": "src/"
+        },
+        "classmap": [
+            "src/"
+        ]
+    },
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
