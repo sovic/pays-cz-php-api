@@ -1,0 +1,21 @@
+{
+    "name": "sovic/pays-cz-php-api",
+    "description": "Pays.cz PHP SDK for payments REST API",
+    "keywords": [
+        "pays.cz",
+        "payments",
+        "php",
+        "rest",
+        "api"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.3"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    }
+}
