@@ -17,16 +17,19 @@ composer require sovic/pays-cz-php-api
 Init
 
 ```php
-$pays = new Pays({merchantId}, {shopId}, {secret});
+$pays = new Pays('{merchant-id}', '{shop-id}', '{secret}');
 ```
 
 Create payment
 
 ```php
-$paysPayment = $pays->createPayment({shop-payment-id}, 'info@customer.com', 1500, 'CZK'); 
-// get pays url and redirect (or add href to button ...) 
+$paysPayment = $pays->createPayment('{shop-payment-id}', '{customer-email}', '{price}', '{currency}'); 
+
+// get Pays.cz gateway url (E.g. for payment button)
 $url = $pays->buildPaymentUrl($paysPayment);
-header('Location: ' . $url);
+
+// redirect to Pays.cz gateway directly
+$pays->redirectToPaymentUrl($paysPayment);
 ```
 
 Validate pays request

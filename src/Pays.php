@@ -3,6 +3,7 @@
 namespace Pays;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 class Pays
 {
@@ -80,12 +81,22 @@ class Pays
         return $this->getGatewayUrl() . '?' . http_build_query($query);
     }
 
+    public function redirectToPaymentUrl(PaysPayment $payment, ?string $returnUrl = null)
+    {
+        $url = $this->buildPaymentUrl($payment, $returnUrl);
+
+        header('Location: ' . $url);
+        exit;
+    }
+
     private function getGatewayUrl(): string
     {
+        // apparently there is no test gateway, it is in dev state at first after registration
+        // after successful tests from Pays it is switched to production mode
         if ($this->isProduction) {
             return 'https://www.pays.cz/paymentorder';
         } else {
-            return 'https://www.pays.cz/test-paymentorder';
+            throw new RuntimeException('Not yet implemented, apparently there is no test gateway on Pays.cz');
         }
     }
 
