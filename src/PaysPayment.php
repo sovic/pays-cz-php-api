@@ -11,26 +11,19 @@ class PaysPayment
     private const DEFAULT_CURRENCY = 'CZK';
 
     private string $clientPaymentId;
+    private ?int $paysPaymentId;
     private ?string $email;
     private ?float $price;
     private string $currency = self::DEFAULT_CURRENCY;
 
     /**
      * @param string $clientOrderId Shop payment identified (string 1..100 chars)
-     * @param string|null $email Customer e-mail, Pays gateway will send confirmation to this address
-     * @param float|null $price Order price
-     * @param string $currency CZK|EUR|USD, default: CZK
+     * @param int|null $paysPaymentId
      */
-    public function __construct(
-        string  $clientOrderId,
-        ?string $email = null,
-        ?float  $price = null,
-        string  $currency = self::DEFAULT_CURRENCY
-    ) {
+    public function __construct(string $clientOrderId, ?int $paysPaymentId = null)
+    {
         $this->setClientPaymentId($clientOrderId);
-        $this->setEmail($email);
-        $this->setPrice($price);
-        $this->setCurrency($currency);
+        $this->setPaysPaymentId($paysPaymentId);
     }
 
     /**
@@ -44,6 +37,16 @@ class PaysPayment
     public function getClientPaymentId(): string
     {
         return $this->clientPaymentId;
+    }
+
+    public function setPaysPaymentId(?int $paysPaymentId): void
+    {
+        $this->paysPaymentId = $paysPaymentId;
+    }
+
+    public function getPaysPaymentId(): ?int
+    {
+        return $this->paysPaymentId;
     }
 
     /**
@@ -69,6 +72,9 @@ class PaysPayment
         return $this->price;
     }
 
+    /**
+     * @param string $currency CZK|EUR|USD, default: CZK
+     */
     public function setCurrency(string $currency): void
     {
         if (!in_array($currency, self::AVAILABLE_CURRENCIES)) {
