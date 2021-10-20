@@ -16,13 +16,6 @@ class Pays
 
     public function __construct(int $merchantId, int $shopId, bool $isProduction = true)
     {
-        if (empty($merchantId)) {
-            throw new InvalidArgumentException('Invalid merchant ID');
-        }
-        if (empty($shopId)) {
-            throw new InvalidArgumentException('Invalid shop ID');
-        }
-
         $this->merchantId = $merchantId;
         $this->shopId = $shopId;
         $this->isProduction = $isProduction;
