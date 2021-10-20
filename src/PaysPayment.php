@@ -10,6 +10,9 @@ class PaysPayment
     // currencies
     private const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
     private const DEFAULT_CURRENCY = 'CZK';
+    private const CURRENCIES_BASE_UNITS = [
+        'CZK' => 100, 'EUR' => 100, 'USD' => 100,
+    ];
 
     // status
     private const STATUS_FAILURE = '2';
@@ -101,27 +104,18 @@ class PaysPayment
         return $this->currency;
     }
 
+    public function getCurrencyBaseUnits(): int
+    {
+        return self::CURRENCIES_BASE_UNITS[$this->currency];
+    }
+
     public function getAmount(): int
     {
         if (null === $this->price) {
             throw new RuntimeException('Invalid price, use PaysPayment::setPrice');
         }
 
-        return $this->convertPriceToAmount($this->price);
-    }
-
-    private function convertPriceToAmount(float $price): int
-    {
-        // TODO better convert price to amount for different currencies
-
-        return round($price * 100);
-    }
-
-    private function convertAmountToPrice(int $amount): float
-    {
-        // TODO better convert price to amount for different currencies
-
-        return $amount / 100;
+        return round($this->price * self::CURRENCIES_BASE_UNITS[$this->currency]);
     }
 
     public function setStatus(string $status): void

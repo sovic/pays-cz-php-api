@@ -11,13 +11,15 @@ class Pays
 
     private int $merchantId;
     private int $shopId;
-    private string $locale = self::DEFAULT_LOCALE;
+    private string $secret;
     private bool $isProduction;
+    private string $locale = self::DEFAULT_LOCALE;
 
-    public function __construct(int $merchantId, int $shopId, bool $isProduction = true)
+    public function __construct(int $merchantId, int $shopId, string $secret, bool $isProduction = true)
     {
         $this->merchantId = $merchantId;
         $this->shopId = $shopId;
+        $this->secret = $secret;
         $this->isProduction = $isProduction;
     }
 
@@ -61,5 +63,64 @@ class Pays
         } else {
             return 'https://www.pays.cz/test-paymentorder';
         }
+    }
+
+    public function validatePaymentRequest(array $query): ?PaysPayment
+    {
+        if (empty($query['MerchantOrderNumber'])) {
+            throw new InvalidArgumentException('Missing MerchantOrderNumber');
+        }
+        $clientOrderId = $query['MerchantOrderNumber'];
+
+        if (empty($query['PaymentOrderID'])) {
+            throw new InvalidArgumentException('Missing PaymentOrderID');
+        }
+        $paysPaymentId = (int) $query['PaymentOrderID'];
+
+        if (empty($query['Amount'])) {
+            throw new InvalidArgumentException('Missing Amount');
+        }
+        $amount = (int) $query['Amount'];
+
+        if (empty($query['CurrencyID'])) {
+            throw new InvalidArgumentException('Missing CurrencyID');
+        }
+        $currency = $query['CurrencyID'];
+
+        if (empty($query['CurrencyBaseUnits'])) {
+            throw new InvalidArgumentException('Missing CurrencyBaseUnits');
+        }
+        $currencyBaseUnits = (int) $query['CurrencyBaseUnits'];
+
+        if (empty($query['PaymentOrderStatusID'])) {
+            throw new InvalidArgumentException('Missing PaymentOrderStatusID');
+        }
+        $status = $query['PaymentOrderStatusID'];
+        $statusDescription = $query['PaymentOrderStatusDescription'] ?? null;
+
+        if (empty($query['hash'])) {
+            throw new InvalidArgumentException('Missing hash');
+        }
+        $hash = $query['hash'];
+
+        $paysPayment = new PaysPayment($clientOrderId, $paysPaymentId);
+        $paysPayment->setPrice($amount / $currencyBaseUnits);
+        $paysPayment->setCurrency($currency);
+        $paysPayment->setStatus($status);
+        $paysPayment->setStatusDescription($statusDescription);
+
+        $paymentHashData =
+            $paysPayment->getPaysPaymentId() .
+            $paysPayment->getClientPaymentId() .
+            $paysPayment->getStatus() .
+            $paysPayment->getCurrency() .
+            $paysPayment->getAmount() .
+            $paysPayment->getCurrencyBaseUnits();
+        $paymentHash = hash_hmac('md5', $paymentHashData, $this->secret);
+        if ($hash !== $paymentHash) {
+            throw new InvalidArgumentException('Invalid hash');
+        }
+
+        return $paysPayment;
     }
 }
