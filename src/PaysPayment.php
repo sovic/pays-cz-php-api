@@ -142,4 +142,9 @@ class PaysPayment
     {
         return $this->statusDescription;
     }
+
+    public function isSuccess(): bool
+    {
+        return $this->getStatus() === self::STATUS_SUCCESS;
+    }
 }
