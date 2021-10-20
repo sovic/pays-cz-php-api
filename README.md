@@ -23,13 +23,10 @@ $pays = new Pays({merchantId}, {shopId}, {secret});
 Create payment
 
 ```php
-$paysPayment = new PaysPayment({shop-payment-id});
-$paysPayment->setPrice(1500);
-$paysPayment->setCurrency('CZK');
-$paysPayment->setEmail('info@customer.com'); // customer e-mail for notification from gateway
-
+$paysPayment = $pays->createPayment({shop-payment-id}, 'info@customer.com', 1500, 'CZK'); 
 // get pays url and redirect (or add href to button ...) 
 $url = $pays->buildPaymentUrl($paysPayment);
+header('Location: ' . $url);
 ```
 
 Validate pays request
@@ -47,6 +44,9 @@ if (null !== $paysPayment && $paysPayment->isSuccess()) {
     // successful payment
     $paysId = $paysPayment->getPaysPaymentId();
     ... 
+} else {
+    // failure|cancelled
+    ...
 }
 
 // all OK, output 202 Accepted

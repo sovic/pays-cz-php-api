@@ -64,7 +64,7 @@ class PaysPayment
     }
 
     /**
-     * @param string|null $email Customer e-mail, Pays gateway will send confirmation to this address
+     * @param string|null $email Customer email, Pays gateway will send confirmation to this address
      */
     public function setEmail(?string $email): void
     {
