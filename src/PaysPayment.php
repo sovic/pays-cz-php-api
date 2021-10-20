@@ -31,12 +31,12 @@ class PaysPayment
     private ?string $statusDescription;
 
     /**
-     * @param string $clientOrderId Shop payment unique ID (string 1..100 chars)
+     * @param string $clientPaymentId Shop payment unique ID (string 1..100 chars)
      * @param int|null $paysPaymentId
      */
-    public function __construct(string $clientOrderId, ?int $paysPaymentId = null)
+    public function __construct(string $clientPaymentId, ?int $paysPaymentId = null)
     {
-        $this->setClientPaymentId($clientOrderId);
+        $this->setClientPaymentId($clientPaymentId);
         $this->setPaysPaymentId($paysPaymentId);
     }
 
@@ -45,8 +45,8 @@ class PaysPayment
      */
     public function setClientPaymentId(string $clientPaymentId): void
     {
-        if (empty($clientOrderId) || strlen($clientOrderId) > 100) {
-            throw new InvalidArgumentException('Invalid clientOrderId (string 1..100 chars)');
+        if (empty($clientPaymentId) || strlen($clientPaymentId) > 100) {
+            throw new InvalidArgumentException('Invalid clientPaymentId (string 1..100 chars)');
         }
         $this->clientPaymentId = $clientPaymentId;
     }
