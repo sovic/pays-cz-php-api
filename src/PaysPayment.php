@@ -7,14 +7,25 @@ use RuntimeException;
 
 class PaysPayment
 {
+    // currencies
     private const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
     private const DEFAULT_CURRENCY = 'CZK';
+
+    // status
+    private const STATUS_FAILURE = '2';
+    private const STATUS_SUCCESS = '3';
+    private const STATUS_OPTIONS = [
+        self::STATUS_FAILURE,
+        self::STATUS_SUCCESS,
+    ];
 
     private string $clientPaymentId;
     private ?int $paysPaymentId;
     private ?string $email;
     private ?float $price;
     private string $currency = self::DEFAULT_CURRENCY;
+    private string $status;
+    private ?string $statusDescription;
 
     /**
      * @param string $clientOrderId Shop payment identified (string 1..100 chars)
@@ -22,8 +33,8 @@ class PaysPayment
      */
     public function __construct(string $clientOrderId, ?int $paysPaymentId = null)
     {
-        $this->setClientPaymentId($clientOrderId);
-        $this->setPaysPaymentId($paysPaymentId);
+        $this->clientPaymentId = $clientOrderId;
+        $this->paysPaymentId = $paysPaymentId;
     }
 
     /**
@@ -111,5 +122,30 @@ class PaysPayment
         // TODO better convert price to amount for different currencies
 
         return $amount / 100;
+    }
+
+    public function setStatus(string $status): void
+    {
+        if (!in_array($status, self::STATUS_OPTIONS)) {
+            throw new InvalidArgumentException(
+                'Invalid status [use: PaysPayment::STATUS_FAILURE|PaysPayment::STATUS_SUCCESS]'
+            );
+        }
+        $this->status = $status;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatusDescription(?string $statusDescription): void
+    {
+        $this->statusDescription = $statusDescription;
+    }
+
+    public function getStatusDescription(): ?string
+    {
+        return $this->statusDescription;
     }
 }
