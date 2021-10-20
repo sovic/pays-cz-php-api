@@ -65,7 +65,7 @@ class Pays
         }
     }
 
-    public function validatePaymentRequest(array $query): ?PaysPayment
+    public function validatePaymentRequestQuery(array $query): ?PaysPayment
     {
         if (empty($query['MerchantOrderNumber'])) {
             throw new InvalidArgumentException('Missing MerchantOrderNumber');
