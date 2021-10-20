@@ -10,7 +10,7 @@ class PaysPayment
     private const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
     private const DEFAULT_CURRENCY = 'CZK';
 
-    private string $clientOrderId;
+    private string $clientPaymentId;
     private ?string $email;
     private ?float $price;
     private string $currency = self::DEFAULT_CURRENCY;
@@ -27,23 +27,23 @@ class PaysPayment
         ?float  $price = null,
         string  $currency = self::DEFAULT_CURRENCY
     ) {
-        $this->setClientOrderId($clientOrderId);
+        $this->setClientPaymentId($clientOrderId);
         $this->setEmail($email);
         $this->setPrice($price);
         $this->setCurrency($currency);
     }
 
     /**
-     * @param string $clientOrderId Shop payment identified (string 1..100 chars)
+     * @param string $clientPaymentId Shop payment identified (string 1..100 chars)
      */
-    public function setClientOrderId(string $clientOrderId): void
+    public function setClientPaymentId(string $clientPaymentId): void
     {
-        $this->clientOrderId = $clientOrderId;
+        $this->clientPaymentId = $clientPaymentId;
     }
 
-    public function getClientOrderId(): string
+    public function getClientPaymentId(): string
     {
-        return $this->clientOrderId;
+        return $this->clientPaymentId;
     }
 
     /**

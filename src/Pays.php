@@ -43,7 +43,7 @@ class Pays
             'Shop' => $this->shopId,
             'Currency' => $payment->getCurrency(),
             'Amount' => $payment->getAmount(),
-            'MerchantOrderNumber' => $payment->getClientOrderId(),
+            'MerchantOrderNumber' => $payment->getClientPaymentId(),
             'Email' => $payment->getEmail() ?: '',
             'Lang' => $this->locale,
         ];
