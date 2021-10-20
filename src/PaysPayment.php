@@ -9,10 +9,10 @@ class PaysPayment
 {
     // currencies
     private const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
-    private const DEFAULT_CURRENCY = 'CZK';
     private const CURRENCIES_BASE_UNITS = [
         'CZK' => 100, 'EUR' => 100, 'USD' => 100,
     ];
+    public const DEFAULT_CURRENCY = 'CZK';
 
     // status
     private const STATUS_FAILURE = '2';
