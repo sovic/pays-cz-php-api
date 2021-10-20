@@ -1,4 +1,4 @@
-# Pays.cz PHP SDK for payments REST API
+# PHP SDK for Pays.cz payment gateway
 
 ## Requirements
 
@@ -23,13 +23,14 @@ $pays = new Pays('{merchant-id}', '{shop-id}', '{secret}');
 Create payment
 
 ```php
-$paysPayment = $pays->createPayment('{shop-payment-id}', '{customer-email}', '{price}', '{currency}'); 
+$paysPayment = $pays->createPayment('{shop-payment-id}', '{price}', '{currency}'); 
+$paysPayment->setEmail('{customer-email}'); // optionally add customer email for Pays.cz notifications
 
 // get Pays.cz gateway url (E.g. for payment button)
-$url = $pays->buildPaymentUrl($paysPayment);
+$url = $pays->buildPaymentUrl($paysPayment, '{return-url}');
 
 // redirect to Pays.cz gateway directly
-$pays->redirectToPaymentUrl($paysPayment);
+$pays->redirectToPaymentUrl($paysPayment, '{return-url}');
 ```
 
 Validate Pays.cz status request

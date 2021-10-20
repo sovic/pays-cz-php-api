@@ -36,19 +36,16 @@ class Pays
 
     /**
      * @param string $shopPaymentId
-     * @param string $customerEmail Customer email for notification from gateway
      * @param float $price
      * @param string $currency CZK|EUR|USD, default: CZK
      * @return PaysPayment
      */
     public function createPayment(
         string $shopPaymentId,
-        string $customerEmail,
         float  $price,
         string $currency = PaysPayment::DEFAULT_CURRENCY
     ): PaysPayment {
         $paysPayment = new PaysPayment($shopPaymentId);
-        $paysPayment->setEmail($customerEmail);
         $paysPayment->setPrice($price);
         $paysPayment->setCurrency($currency);
 
@@ -62,18 +59,17 @@ class Pays
      */
     public function buildPaymentUrl(PaysPayment $payment, ?string $returnUrl = null): string
     {
-        if (empty($payment->getEmail())) {
-            throw new InvalidArgumentException('Invalid payment email');
-        }
         $query = [
             'Merchant' => $this->merchantId,
             'Shop' => $this->shopId,
             'Currency' => $payment->getCurrency(),
             'Amount' => $payment->getAmount(),
             'MerchantOrderNumber' => $payment->getClientPaymentId(),
-            'Email' => $payment->getEmail(),
             'Lang' => $this->locale,
         ];
+        if ($payment->getEmail()) {
+            $query['Email'] = $payment->getEmail();
+        }
         if ($returnUrl) {
             $query['ReturnURL'] = $returnUrl;
         }
