@@ -6,9 +6,6 @@ use InvalidArgumentException;
 
 class Pays
 {
-    private const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
-    private const DEFAULT_CURRENCY = 'CZK';
-
     private const AVAILABLE_LOCALES = ['CS-CZ', 'SK-SK', 'EN-US', 'RU-RU', 'JA-JP'];
     private const DEFAULT_LOCALE = 'CS-CZ';
 
@@ -42,34 +39,19 @@ class Pays
     }
 
     /**
-     * @param string $clientOrderId Shop payment identified (string 1..100 chars)
-     * @param string $email Customer e-mail, Pays gateway will send confirmation to this address
-     * @param int $amount Order price, the smallest units for currency
-     * @param string $currency
+     * @param PaysPayment $payment
      * @param string|null $returnUrl Optional, Pays gateway will use return url specified during activation as default
-     *
      * @return string
      */
-    public function buildPaymentUrl(
-        string  $clientOrderId,
-        string  $email,
-        int     $amount,
-        string  $currency = self::DEFAULT_CURRENCY,
-        ?string $returnUrl = null
-    ): string {
-        if (!in_array($currency, self::AVAILABLE_CURRENCIES)) {
-            throw new InvalidArgumentException(
-                'Invalid currency [use: ' . implode(',', self::AVAILABLE_CURRENCIES) . ']'
-            );
-        }
-
+    public function buildPaymentUrl(PaysPayment $payment, ?string $returnUrl = null): string
+    {
         $query = [
             'Merchant' => $this->merchantId,
             'Shop' => $this->shopId,
-            'Currency' => $currency,
-            'Amount' => $amount,
-            'MerchantOrderNumber' => $clientOrderId,
-            'Email' => $email,
+            'Currency' => $payment->getCurrency(),
+            'Amount' => $payment->getAmount(),
+            'MerchantOrderNumber' => $payment->getClientOrderId(),
+            'Email' => $payment->getEmail() ?: '',
             'Lang' => $this->locale,
         ];
         if ($returnUrl) {
