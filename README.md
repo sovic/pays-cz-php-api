@@ -32,24 +32,21 @@ $url = $pays->buildPaymentUrl($paysPayment);
 $pays->redirectToPaymentUrl($paysPayment);
 ```
 
-Validate pays request
+Validate Pays.cz status request
 
 ```php 
-$query = [ ... ]; // query params from HTTP request
+$query = [ … ]; // query params array from HTTP request
 
 try {
     $paysPayment = $pays->validatePaymentRequestQuery($query);
+    if ($paysPayment->isSuccess()) {
+        // handle successful payment
+        $clientPaymentId = $paysPayment->getClientPaymentId();
+    } else {
+        // handle failed|cancelled payment
+    }
 } catch(Exception $e) {
-    // invalid request, output 400 Bad Request
-}
-
-if (null !== $paysPayment && $paysPayment->isSuccess()) {
-    // successful payment
-    $paysId = $paysPayment->getPaysPaymentId();
-    ... 
-} else {
-    // failure|cancelled
-    ...
+    // invalid request, some parameter missing or invalid signature hash, output 400 Bad Request
 }
 
 // all OK, output 202 Accepted
