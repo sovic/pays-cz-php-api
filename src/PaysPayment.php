@@ -29,7 +29,7 @@ class PaysPayment
     private ?float $price;
     private string $currency = self::DEFAULT_CURRENCY;
     private string $status;
-    private ?string $statusDescription;
+    private ?string $statusDescription = null;
 
     /**
      * @param string $clientPaymentId Shop payment unique ID (string 1..100 chars)
