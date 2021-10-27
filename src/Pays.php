@@ -154,4 +154,27 @@ class Pays
 
         return $paysPayment;
     }
+
+    public function generatePaymentRequestQuery(PaysPayment $paysPayment): array
+    {
+        $paymentHashData =
+            $paysPayment->getPaysPaymentId() .
+            $paysPayment->getClientPaymentId() .
+            $paysPayment->getStatus() .
+            $paysPayment->getCurrency() .
+            $paysPayment->getAmount() .
+            $paysPayment->getCurrencyBaseUnits();
+        $paymentHash = hash_hmac('md5', $paymentHashData, $this->secret);
+
+        return [
+            'MerchantOrderNumber' => $paysPayment->getClientPaymentId(),
+            'PaymentOrderID' => $paysPayment->getPaysPaymentId(),
+            'Amount' => $paysPayment->getAmount(),
+            'CurrencyID' => $paysPayment->getCurrency(),
+            'CurrencyBaseUnits' => $paysPayment->getCurrencyBaseUnits(),
+            'PaymentOrderStatusID' => $paysPayment->getStatus(),
+            'PaymentOrderStatusDescription' => $paysPayment->getStatusDescription(),
+            'hash' => $paymentHash,
+        ];
+    }
 }
