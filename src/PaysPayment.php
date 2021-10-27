@@ -8,16 +8,17 @@ use RuntimeException;
 class PaysPayment
 {
     // currencies
-    private const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
-    private const CURRENCIES_BASE_UNITS = [
+    public const AVAILABLE_CURRENCIES = ['CZK', 'EUR', 'USD'];
+    public const CURRENCIES_BASE_UNITS = [
         'CZK' => 100, 'EUR' => 100, 'USD' => 100,
     ];
     public const DEFAULT_CURRENCY = 'CZK';
 
     // status
-    private const STATUS_FAILURE = '2';
-    private const STATUS_SUCCESS = '3';
-    private const STATUS_OPTIONS = [
+    public const STATUS_FAILURE = '2';
+    public const STATUS_SUCCESS = '3';
+
+    public const STATUS_OPTIONS = [
         self::STATUS_FAILURE,
         self::STATUS_SUCCESS,
     ];
