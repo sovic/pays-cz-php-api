@@ -1,6 +1,6 @@
 {
     "name": "sovic/pays-cz-php-api",
-    "description": "Pays.cz PHP SDK for payments REST API",
+    "description": "PHP SDK for Pays.cz payment gateway",
     "keywords": [
         "pays.cz",
         "payments",

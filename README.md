@@ -1,5 +1,7 @@
 # PHP SDK for Pays.cz payment gateway
 
+[![packagist](https://img.shields.io/packagist/v/sovic/pays-cz-php-api?maxAge=2592000)]() [![license](https://img.shields.io/packagist/l/sovic/pays-cz-php-api?maxAge=2592000)]()
+
 ## Requirements
 
 - PHP >= 7.4
