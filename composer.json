@@ -1,12 +1,12 @@
 {
-    "name": "sovic/pays-cz-php-api",
+    "name": "sovic/pays-cz-php-sdk",
     "description": "PHP SDK for Pays.cz payment gateway",
     "keywords": [
         "pays.cz",
         "payments",
+        "gateway",
         "php",
-        "rest",
-        "api"
+        "sdk"
     ],
     "type": "library",
     "license": "MIT",

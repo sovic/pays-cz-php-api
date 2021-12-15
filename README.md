@@ -1,6 +1,6 @@
 # PHP SDK for Pays.cz payment gateway
 
-[![packagist](https://img.shields.io/packagist/v/sovic/pays-cz-php-api?maxAge=2592000)]() [![license](https://img.shields.io/packagist/l/sovic/pays-cz-php-api?maxAge=2592000)]()
+[![packagist](https://img.shields.io/packagist/v/sovic/pays-cz-php-sdk?maxAge=2592000)]() [![license](https://img.shields.io/packagist/l/sovic/pays-cz-php-sdk?maxAge=2592000)]()
 
 ## Requirements
 
@@ -11,7 +11,7 @@
 Using [Composer](https://getcomposer.org/doc/00-intro.md)
 
 ```bash
-composer require sovic/pays-cz-php-api
+composer require sovic/pays-cz-php-sdk
 ```
 
 ## Usage
