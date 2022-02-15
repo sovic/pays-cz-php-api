@@ -1,6 +1,6 @@
 # PHP SDK for Pays.cz payment gateway
 
-[![packagist](https://img.shields.io/packagist/v/sovic/pays-cz-php-sdk?maxAge=2592000)]() [![license](https://img.shields.io/packagist/l/sovic/pays-cz-php-sdk?maxAge=2592000)]()
+[![packagist](https://img.shields.io/packagist/v/sovic/pays-cz-php-sdk?style=flat-square&maxAge=2592000)]() [![license](https://img.shields.io/github/license/sovic/pays-cz-php-sdk?style=flat-square)]()
 
 ## Requirements
 
