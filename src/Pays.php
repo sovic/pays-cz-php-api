@@ -24,7 +24,7 @@ class Pays
         $this->isProduction = $isProduction;
     }
 
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): void
     {
         if (!in_array($locale, self::AVAILABLE_LOCALES)) {
             throw new InvalidArgumentException(
@@ -77,7 +77,7 @@ class Pays
         return $this->getGatewayUrl() . '?' . http_build_query($query);
     }
 
-    public function redirectToPaymentUrl(PaysPayment $payment, ?string $returnUrl = null)
+    public function redirectToPaymentUrl(PaysPayment $payment, ?string $returnUrl = null): void
     {
         $url = $this->buildPaymentUrl($payment, $returnUrl);
 
@@ -91,9 +91,9 @@ class Pays
         // after successful tests from Pays it is switched to production mode
         if ($this->isProduction) {
             return 'https://www.pays.cz/paymentorder';
-        } else {
-            throw new RuntimeException('Not yet implemented, apparently there is no test gateway on Pays.cz');
         }
+
+        throw new RuntimeException('Not yet implemented, apparently there is no test gateway on Pays.cz');
     }
 
     public function validatePaymentRequestQuery(array $query): PaysPayment
