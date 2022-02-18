@@ -28,7 +28,7 @@ class PaysPayment
     private ?string $email;
     private ?float $price;
     private string $currency = self::DEFAULT_CURRENCY;
-    private string $status;
+    private ?string $status = null;
     private ?string $statusDescription = null;
 
     /**
@@ -134,7 +134,7 @@ class PaysPayment
 
     public function getStatus(): string
     {
-        return $this->status;
+        return (string) $this->status;
     }
 
     public function setStatusDescription(?string $statusDescription): void
@@ -147,7 +147,7 @@ class PaysPayment
         return $this->statusDescription;
     }
 
-    public function isSuccess(): bool
+    public function isPaid(): bool
     {
         return $this->getStatus() === self::STATUS_SUCCESS;
     }

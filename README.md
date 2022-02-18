@@ -42,7 +42,7 @@ $query = [ … ]; // query params array from HTTP request
 
 try {
     $paysPayment = $pays->validatePaymentRequestQuery($query);
-    if ($paysPayment->isSuccess()) {
+    if ($paysPayment->isPaid()) {
         // handle successful payment
         $clientPaymentId = $paysPayment->getClientPaymentId();
     } else {
